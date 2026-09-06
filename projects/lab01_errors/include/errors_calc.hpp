@@ -44,11 +44,17 @@ double calc_rel(double delta, double value)
     return delta / fabs(value);
 }
 
-int count_valid_digits(double x, double delta, double omega = 0.5) 
+int count_valid_digits(double x, double delta, double omega = 0.5)
 {
     if (x == 0.0 || delta <= 0.0) return 0;
 
-    int m = static_cast<int>(floor(log10(fabs(x)))) + 1;
-    int n = static_cast<int>(floor(m + 1.0 - log10(delta / omega)));
-    return n > 0 ? n : 0;
+    int first_digit_power = static_cast<int>(floor(log10(fabs(x))));
+    int count = 0;
+
+    while (delta <= omega * pow(10.0, first_digit_power - count))
+    {
+        count++;
+    }
+
+    return count;
 }
