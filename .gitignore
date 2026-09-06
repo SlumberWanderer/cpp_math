@@ -1,0 +1,13 @@
+build/
+dist/
+
+.kdev4/
+.vscode/
+.cache/
+.vs/
+.git/
+compile_commands.json
+
+*.exe
+*.dll
+*.obj
