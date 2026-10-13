@@ -1,9 +1,11 @@
 #include "gauss-app.hpp"
 #include <iostream>
+#include <fstream>
 
-void process_linear_by_gauss()
+namespace {
+
+void run_calculations(std::ostream& os)
 {
-    using std::cout;
     using std::endl;
     using linear_algebra::RectangleMatrix;
     using linear_algebra::Vector;
@@ -19,33 +21,42 @@ void process_linear_by_gauss()
     };
 
     const RectangleMatrix coefficients = raw_m;
-
     const Vector rhs { 44.7878, -22.5032, 48.1769, -20.7736 };
 
-    cout << coefficients << endl;
-    cout << rhs << endl;
+    os << coefficients << endl;
+    os << rhs << endl;
 
     const PartialGaussResolver system_resolver;
     const PartialGaussDeterminantResolver determinant_resolver;
     const PartialGaussInverseMatrixResolver inverse_resolver;
 
     const auto solution = system_resolver.resolve(coefficients, rhs);
+    os << endl << "Solution:" << solution << endl;
 
-    cout << endl << "Solution:" << solution << endl;
+    os << endl << "Validate:" << coefficients * solution << endl;
 
-    cout << endl << "Validate:" << coefficients * solution << endl;
+    os << endl << "Deviate:" << system_resolver.deviate(coefficients, solution, rhs) << endl;
 
-    cout << endl << "Deviate:" << system_resolver.deviate(coefficients, solution, rhs) << endl;
-
-    cout << endl << "Determinant:" << determinant_resolver.determinant(coefficients) << endl;
+    os << endl << "Determinant:" << determinant_resolver.determinant(coefficients) << endl;
 
     const auto inverse_m = inverse_resolver.inverse(coefficients);
+    os << "Inverse matrix:" << endl << inverse_m << endl;
 
-    cout << "Inverse matrix:" << endl << inverse_m << endl;
-
-    cout << "Product of source and inverse matrix from left to right or right to left should produce identity matrix" << endl;
-
+    os << "Product of source and inverse matrix from left to right or right to left should produce identity matrix" << endl;
     const auto identity = coefficients * inverse_m;
+    os << identity << endl;
+}
+}
 
-    cout << identity << endl;
+void process_linear_by_gauss()
+{
+    run_calculations(std::cout);
+
+    std::ofstream file("gauss_output.txt");
+    if (file.is_open()) {
+        run_calculations(file); 
+        std::cout << "\nSaved to gauss_output.txt" << std::endl;
+    } else {
+        std::cerr << "\nError: Cannot open file" << std::endl;
+    }
 }
