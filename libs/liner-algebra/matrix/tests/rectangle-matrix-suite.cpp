@@ -38,3 +38,21 @@ TEST_CASE("Matrix dimensions exception handling", "[matrix][exceptions]") {
     
     REQUIRE_THROWS_AS(m * v, exception::xNonEqualMatrixDimensions);
 }
+
+TEST_CASE("RectangleMatrix transpose", "[rectangle-matrix][transpose]") {
+    RectangleMatrix m = {
+        {1.0, 2.0, 3.0},
+        {4.0, 5.0, 6.0}
+    };
+
+    RectangleMatrix t = m.transpose();
+
+    REQUIRE(t.rows() == 3);
+    REQUIRE(t.cols() == 2);
+    REQUIRE(t(0, 0) == Catch::Approx(1.0));
+    REQUIRE(t(0, 1) == Catch::Approx(4.0));
+    REQUIRE(t(1, 0) == Catch::Approx(2.0));
+    REQUIRE(t(1, 1) == Catch::Approx(5.0));
+    REQUIRE(t(2, 0) == Catch::Approx(3.0));
+    REQUIRE(t(2, 1) == Catch::Approx(6.0));
+}

@@ -127,6 +127,17 @@ RectangleMatrix RectangleMatrix::operator*(const RectangleMatrix& other) const {
     return result;
 }
 
+RectangleMatrix RectangleMatrix::transpose() const {
+    RectangleMatrix result(cols_, rows_, 0.0);
+    for (std::size_t i = 0; i < rows_; ++i) {
+        const std::size_t row_offset = i * cols_;
+        for (std::size_t j = 0; j < cols_; ++j) {
+            result.data_[j * rows_ + i] = data_[row_offset + j];
+        }
+    }
+    return result;
+}
+
 RectangleMatrix RectangleMatrix::identity(std::size_t size) {
     RectangleMatrix id(size, size, 0.0);
     for (std::size_t i = 0; i < size; ++i) {
@@ -137,11 +148,12 @@ RectangleMatrix RectangleMatrix::identity(std::size_t size) {
 
 std::ostream& operator<<(std::ostream& os, const RectangleMatrix& mat) {
     std::ostringstream oss;
+    oss << std::setprecision(5);
     for (std::size_t i = 0; i < mat.rows_; ++i) {
         oss << "[ ";
         const std::size_t row_offset = i * mat.cols_;
         for (std::size_t j = 0; j < mat.cols_; ++j) {
-            oss << std::setw(10) << std::setprecision(5) << mat.data_[row_offset + j] << " ";
+            oss << std::setw(10) << mat.data_[row_offset + j] << " ";
         }
         oss << "]\n";
     }
