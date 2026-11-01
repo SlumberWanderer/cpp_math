@@ -91,4 +91,23 @@ std::ostream& operator<<(std::ostream& os, const BandMatrix& mat) {
     return os << oss.str();
 }
 
+std::istream& operator>>(std::istream& is, BandMatrix& mat) {
+    std::size_t n = 0;
+    if (!(is >> n)) {
+        return is;
+    }
+
+    Vector a(n), b(n), c(n);
+    for (std::size_t i = 0; i < n; ++i) is >> a[i];
+    for (std::size_t i = 0; i < n; ++i) is >> b[i];
+    for (std::size_t i = 0; i < n; ++i) is >> c[i];
+
+    if (!is) {
+        throw exception::xImpossibleMatrixOperation();
+    }
+
+    mat = BandMatrix(a, b, c);
+    return is;
+}
+
 }

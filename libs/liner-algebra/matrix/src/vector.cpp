@@ -50,4 +50,21 @@ std::ostream& operator<<(std::ostream& os, const Vector& vec) {
     return os << oss.str();
 }
 
+std::istream& operator>>(std::istream& is, Vector& vec) {
+    std::size_t size = 0;
+    if (!(is >> size)) {
+        return is;
+    }
+
+    Vector temp(size);
+    for (std::size_t i = 0; i < size; ++i) {
+        if (!(is >> temp[i])) {
+            throw exception::xImpossibleMatrixOperation();
+        }
+    }
+
+    vec = std::move(temp);
+    return is;
+}
+
 }

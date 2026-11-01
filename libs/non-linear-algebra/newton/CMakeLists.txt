@@ -1,0 +1,27 @@
+project("non-linear-newton")
+
+file(GLOB SRC src/*.cpp src/*.cxx)
+add_library(${PROJECT_NAME} ${SRC})
+
+set(DOMAIN_DEPS non-linear-core gauss)
+
+target_link_libraries(${PROJECT_NAME} PUBLIC ${DOMAIN_DEPS})
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/tests")
+    file(GLOB TEST_SRC tests/*.cpp tests/*.cxx)
+
+    if (TEST_SRC)
+        set(TEST_EXE_NAME "${PROJECT_NAME}-tests")
+
+        add_executable(${TEST_EXE_NAME} ${TEST_SRC})
+
+        target_link_libraries(${TEST_EXE_NAME} PRIVATE
+                ${PROJECT_NAME}
+                Catch2::Catch2WithMain
+                gauss
+        )
+        catch_discover_tests(${TEST_EXE_NAME})
+    endif ()
+
+endif()

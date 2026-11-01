@@ -160,4 +160,24 @@ std::ostream& operator<<(std::ostream& os, const RectangleMatrix& mat) {
     return os << oss.str();
 }
 
+std::istream& operator>>(std::istream& is, RectangleMatrix& mat) {
+    std::size_t rows = 0;
+    std::size_t cols = 0;
+    if (!(is >> rows >> cols)) {
+        return is;
+    }
+
+    RectangleMatrix temp(rows, cols);
+    for (std::size_t i = 0; i < rows; ++i) {
+        for (std::size_t j = 0; j < cols; ++j) {
+            if (!(is >> temp(i, j))) {
+                throw exception::xImpossibleMatrixOperation();
+            }
+        }
+    }
+
+    mat = std::move(temp);
+    return is;
+}
+
 }

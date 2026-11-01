@@ -44,6 +44,8 @@ public:
     static RectangleMatrix identity(std::size_t size);
 
     friend std::ostream& operator<<(std::ostream& os, const RectangleMatrix& mat);
+    friend std::ostream& operator<<(std::ostream& os, const RectangleMatrix& mat);
+    friend std::istream& operator>>(std::istream& is, RectangleMatrix& mat);
 };
 
 }

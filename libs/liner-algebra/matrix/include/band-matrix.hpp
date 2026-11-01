@@ -30,6 +30,8 @@ public:
     Vector operator*(const Vector& vec) const;
 
     friend std::ostream& operator<<(std::ostream& os, const BandMatrix& mat);
+    friend std::ostream& operator<<(std::ostream& os, const BandMatrix& mat);
+    friend std::istream& operator>>(std::istream& is, BandMatrix& mat);
 };
 
 }

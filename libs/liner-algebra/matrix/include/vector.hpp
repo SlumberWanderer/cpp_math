@@ -29,6 +29,8 @@ public:
     Vector operator-(const Vector& other) const;
 
     friend std::ostream& operator<<(std::ostream& os, const Vector& vec);
+    friend std::ostream& operator<<(std::ostream& os, const Vector& vec);
+    friend std::istream& operator>>(std::istream& is, Vector& vec);
 };
 
 }
