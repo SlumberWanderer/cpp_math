@@ -1,0 +1,5 @@
+﻿add_subdirectory (lagrange)
+add_subdirectory (mean-square)
+add_subdirectory (spline-compare)
+add_subdirectory (spline-tabulation)
+add_subdirectory (bmp-graphics)

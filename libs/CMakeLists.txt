@@ -1,3 +1,6 @@
 add_subdirectory (liner-algebra)
 add_subdirectory (equation)
 add_subdirectory (non-linear-algebra)
+add_subdirectory (plane2d)
+add_subdirectory (plot2d)
+add_subdirectory (interpolation)
